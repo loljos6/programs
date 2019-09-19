@@ -105,6 +105,7 @@ private void writeHTTPHeader(OutputStream os, String contentType) throws Excepti
        os.write("HTTP/1.1 200 OK\n".getBytes());
    }
    else{
+      //404 error
       os.write("HTTP/1.1 404 OK\n".getBytes());
    }
    os.write("Date: ".getBytes());
@@ -138,6 +139,7 @@ private void writeContent(OutputStream os, String url) throws Exception
         }
    }
 }
+//changes file to byte array
 private static byte[] readFileToByteArray(File file){
         FileInputStream fis = null;
         // Creating a byte array using the length of the file
@@ -150,6 +152,7 @@ private static byte[] readFileToByteArray(File file){
         }catch(IOException ioExp){
             ioExp.printStackTrace();
         }
+	//replaces strings for custon html tags
         String s = new String(bArray, StandardCharsets.UTF_8);
         s = s.replace("<cs371date>", java.time.LocalDate.now()+"");
         s = s.replace("<cs371server>", "Joshua R. Alexander's Server");
