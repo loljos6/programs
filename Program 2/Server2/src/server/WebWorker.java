@@ -99,10 +99,12 @@ private void readHTTPRequest(InputStream is)
 private void writeHTTPHeader(OutputStream os, String contentType) throws Exception
 {
     File page;
+    //Reads images file and does not append .html
    if(url.contains(".png") || url.contains(".ico") || url.contains(".gif") || url.contains(".jpg") || url.contains(".jpeg")){
        page = new File(url.replace('\\', '/'));
    }
    else{
+       //appends .html to read file.
        page = new File(url.replace('\\', '/')+".html");
    }
    Date d = new Date();
@@ -118,8 +120,6 @@ private void writeHTTPHeader(OutputStream os, String contentType) throws Excepti
    os.write((df.format(d)).getBytes());
    os.write("\n".getBytes());
    os.write("Server: Jon's very own server\n".getBytes());
-   //os.write("Last-Modified: Wed, 08 Jan 2003 23:11:55 GMT\n".getBytes());
-   //os.write("Content-Length: 438\n".getBytes()); 
    os.write("Connection: close\n".getBytes());
    os.write("Content-Type: ".getBytes());
    os.write(contentType.getBytes());
@@ -135,12 +135,14 @@ private void writeHTTPHeader(OutputStream os, String contentType) throws Excepti
 private void writeContent(OutputStream os, String url) throws Exception
 {
     File page;
+    //writes bytes from image file
    if(url.contains(".png") || url.contains(".ico") || url.contains(".gif") || url.contains(".jpg") || url.contains(".jpeg")){
        page = new File(url.replace('\\', '/'));
        byte[] fileContent = Files.readAllBytes(page.toPath());
        os.write(fileContent);
    }
    else{
+       //writes bytes from html files
        page = new File(url.replace('\\', '/')+".html");
        if(page.isFile()){
              os.write(readFileToByteArray(page));
@@ -166,9 +168,6 @@ private static byte[] readFileToByteArray(File file){
         }   
         String s = new String(bArray, StandardCharsets.UTF_8);
         s = s.replace("<cs371date>", java.time.LocalDate.now()+"");
-//        String temp = s.split("<img")[1];
-//        temp = temp.split(">")[0];
-//        System.out.println(temp);
         s = s.replace("<cs371server>", "Joshua R. Alexander's Server");
         bArray = s.getBytes();
         return bArray;
