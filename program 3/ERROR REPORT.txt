@@ -1,0 +1,4 @@
+Joshua Alexander cs 372 program 3 error report
+The functional issue when the code has coreect inputs is with the overallScore function.
+If two score values are the same, it does not test properly. 
+An example is the test 25,0,0 which has a result of 198.
